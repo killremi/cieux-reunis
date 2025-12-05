@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Le Qui Est-Ce des Cieux Réunis 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg-dark: #0b1724;
+      --bg-panel: rgba(255, 255, 255, 0.9);
+      --accent-red: #e53935;
+      --accent-green: #2e7d32;
+      --accent-gold: #fbc02d;
+      --text-dark: #222;
+      --text-light: #fdfdfd;
+      --card-border: rgba(255, 255, 255, 0.7);
+      --eliminated-overlay: rgba(0, 0, 0, 0.6);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.25), transparent 60%),
+        radial-gradient(circle at bottom, rgba(255,255,255,0.1), transparent 70%),
+        linear-gradient(135deg, #0b1724, #14344f);
+      color: var(--text-light);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      padding: 8px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.12),
+        rgba(255, 255, 255, 0.04)
+      );
+      border-radius: 20px;
+      padding: 12px 12px 18px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 1.4rem;
+      text-align: center;
+      color: var(--accent-gold);
+      text-shadow: 0 0 12px rgba(0, 0, 0, 0.7);
+    }
+
+    .subtitle {
+      text-align: center;
+      margin: 0 0 6px;
+      font-size: 0.9rem;
+    }
+
+    .snow {
+      font-size: 1.1rem;
+    }
+
+    /* Start screen */
+    #start-screen {
+      background: var(--bg-panel);
+      color: var(--text-dark);
+      border-radius: 14px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    #start-screen h2 {
+      margin: 0 0 4px;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    .mode-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    button {
+      cursor: pointer;
+      border-radius: 999px;
+      border: none;
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: transform 0.1s ease, box-shadow 0.1s ease,
+        background-color 0.1s ease, opacity 0.1s ease;
+    }
+
+    button.primary {
+      background: linear-gradient(135deg, var(--accent-red), #ff7043);
+      color: var(--text-light);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+    }
+
+    button.secondary {
+      background: linear-gradient(135deg, #1565c0, #42a5f5);
+      color: var(--text-light);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    button.ghost {
+      background: transparent;
+      color: var(--text-dark);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    .manual-select {
+      margin-top: 8px;
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    select {
+      border-radius: 999px;
+      padding: 7px 10px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      font-size: 0.9rem;
+    }
+
+    /* Game layout */
+    #game {
+      display: none;
+      gap: 8px;
+      grid-template-columns: 1.4fr 1fr;
+    }
+
+    @media (max-width: 720px) {
+      #game {
+        display: none;
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .board {
+      background: var(--bg-panel);
+      border-radius: 14px;
+      padding: 8px;
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .board-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .board-header h2 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .status {
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+
+    .grid {
+      margin-top: 4px;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    @media (max-width: 520px) {
+      .grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    .card {
+      position: relative;
+      background: #111;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 2px solid var(--card-border);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease,
+        border-color 0.1s ease, opacity 0.1s ease;
+    }
+
+    .card img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .card-name {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 3px 2px 4px;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.85),
+        rgba(0, 0, 0, 0.25)
+      );
+      color: #fff;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.55);
+      border-color: var(--accent-gold);
+    }
+
+    .card.eliminated {
+      opacity: 0.25;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .card.eliminated::after {
+      content: "X";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.95);
+      background: var(--eliminated-overlay);
+    }
+
+    .legend {
+      margin-top: 4px;
+      font-size: 0.75rem;
+      opacity: 0.85;
+    }
+
+    /* Sidebar / questions */
+    .sidebar {
+      background: var(--bg-panel);
+      border-radius: 14px;
+      padding: 8px;
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sidebar h3 {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .tiny {
+      font-size: 0.75rem;
+      opacity: 0.8;
+    }
+
+    .questions-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .questions-buttons button {
+      font-size: 0.78rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #eeeeee;
+      color: #333;
+      border: 1px solid rgba(0,0,0,0.15);
+      box-shadow: none;
+    }
+
+    .questions-buttons button:hover {
+      background: #fff8e1;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .question-history {
+      max-height: 160px;
+      overflow-y: auto;
+      border-radius: 10px;
+      border: 1px dashed rgba(0, 0, 0, 0.15);
+      padding: 6px;
+      background: rgba(255, 255, 255, 0.7);
+      font-size: 0.78rem;
+    }
+
+    .question-history ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .question-history li {
+      margin-bottom: 2px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+      align-items: center;
+    }
+
+    .mode-indicator {
+      font-size: 0.75rem;
+      font-style: italic;
+      opacity: 0.9;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .modal {
+      background: radial-gradient(circle at top, #fffbe7, #ffe0b2);
+      border-radius: 16px;
+      padding: 14px;
+      max-width: 420px;
+      width: calc(100% - 32px);
+      color: var(--text-dark);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6);
+      position: relative;
+      border: 2px solid var(--accent-gold);
+    }
+
+    .modal h2 {
+      margin: 0 0 6px;
+      font-size: 1.1rem;
+      text-align: center;
+      color: var(--accent-green);
+    }
+
+    .modal .person-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 0 auto 6px;
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .modal .person-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .modal p {
+      margin: 4px 0;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    .modal .gift-list {
+      margin-top: 8px;
+      padding: 8px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #fff3e0, #ffecb3);
+      border: 1px solid rgba(183, 28, 28, 0.2);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+      max-height: 260px;
+      overflow-y: auto;
+      font-size: 0.8rem;
+    }
+
+    .gift-list h3 {
+      margin: 0 0 4px;
+      font-size: 0.95rem;
+      color: var(--accent-red);
+      text-align: center;
+    }
+
+    .gift-list h4 {
+      margin: 6px 0 2px;
+      font-size: 0.85rem;
+      color: #6d4c41;
+    }
+
+    .gift-list ul {
+      margin: 0 0 4px 16px;
+      padding-left: 0;
+    }
+
+    .gift-list li {
+      margin-bottom: 2px;
+    }
+
+    .modal .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      background: rgba(46, 125, 50, 0.1);
+      color: var(--accent-green);
+      border: 1px solid rgba(46, 125, 50, 0.3);
+    }
+
+    .badge span {
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>Le Qui Est-Ce des Cieux Réunis 2025 🎄</h1>
+    <p class="subtitle">
+      <span class="snow">❄️</span>
+      Bienvenue au grand jeu familial&nbsp;! Pose une question, élimine des têtes,
+      puis tente ta chance&nbsp;!
+      <span class="snow">⛄</span>
+    </p>
+
+    <!-- Écran de démarrage -->
+    <section id="start-screen">
+      <h2>Choisis le mode de jeu</h2>
+      <p class="tiny">
+        Tu peux laisser l’ordinateur choisir un personnage au hasard, ou bien
+        demander à quelqu’un de la famille de choisir en secret.
+      </p>
+      <div class="mode-buttons">
+        <button class="primary" id="btn-random">
+          🎲 L’ordi choisit le personnage
+        </button>
+        <button class="secondary" id="btn-manual">
+          🤫 Un joueur choisit le personnage
+        </button>
+      </div>
+
+      <div class="manual-select" id="manual-select">
+        <label for="manual-person" class="tiny">
+          Choisis le personnage secret (et ne le montre pas aux autres&nbsp;!)
+        </label>
+        <select id="manual-person"></select>
+        <button class="primary" id="btn-start-manual">
+          🚀 Commencer la partie
+        </button>
+      </div>
+    </section>
+
+    <!-- Jeu principal -->
+    <section id="game">
+      <!-- Plateau -->
+      <div class="board">
+        <div class="board-header">
+          <h2>Plateau de jeu</h2>
+          <div class="status">
+            Personnages possibles :
+            <span id="remaining-count"></span> / <span id="total-count"></span>
+          </div>
+        </div>
+        <div class="grid" id="grid"></div>
+        <p class="legend">
+          👉 Tape sur une image pour barrer (ou réactiver) un personnage que tu
+          veux éliminer. Quand tu veux deviner, clique d'abord sur
+          <strong>“Proposer une réponse”</strong>, puis sur la carte choisie.
+        </p>
+      </div>
+
+      <!-- Questions & contrôles -->
+      <aside class="sidebar">
+        <h3>Questions possibles</h3>
+        <p class="tiny">
+          Clique sur une question. L’ordinateur répond OUI ou NON, et l’historique se met à jour.
+        </p>
+        <div class="questions-buttons" id="questions-buttons"></div>
+
+        <div>
+          <h3>Historique des questions</h3>
+          <div class="question-history" id="history">
+            <ul id="history-list"></ul>
+          </div>
+        </div>
+
+        <div>
+          <h3>Devine le personnage</h3>
+          <div class="controls">
+            <button class="secondary" id="guess-btn">🔍 Proposer une réponse</button>
+            <span class="mode-indicator" id="mode-indicator">
+              Mode normal : les cartes barrent / débarrent les personnages.
+            </span>
+            <button class="ghost" id="restart-btn">🔄 Nouvelle partie</button>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </div>
+
+  <!-- Modal de résultat -->
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal" role="dialog" aria-modal="true">
+      <h2 id="modal-title"></h2>
+      <div class="person-img" id="modal-img"></div>
+      <p id="modal-text"></p>
+      <div id="gift-container"></div>
+      <div class="buttons">
+        <button class="primary" id="modal-close">OK 🎁</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === Données des personnages ===
+    const persons = [
+      {
+        name: "Céline",
+        image: "Céline.jpg",
+        adult: true,
+        glasses: true,
+        beard: false,
+        eating: false,
+        smiles: true,
+        psg: true,
+        girl: true
+      },
+      {
+        name: "Thomas",
+        image: "Thomas.jpg",
+        adult: true,
+        glasses: true,
+        beard: true,
+        eating: false,
+        smiles: true,
+        psg: true,
+        girl: false
+      },
+      {
+        name: "Sasha",
+        image: "Sasha.jpg",
+        adult: false,
+        glasses: false,
+        beard: false,
+        eating: false,
+        smiles: true,
+        psg: false,
+        girl: false
+      },
+      {
+        name: "Nicolas",
+        image: "Nicolas.jpeg",
+        adult: false,
+        glasses: false,
+        beard: false,
+        eating: false,
+        smiles: true,
+        psg: true,
+        girl: false
+      },
+      {
+        name: "Valentin",
+        image: "Valentin.jpeg",
+        adult: false,
+        glasses: false,
+        beard: false,
+        eating: true,
+        smiles: false,
+        psg: false,
+        girl: false
+      },
+      {
+        name: "Martin",
+        image: "Martin.jpeg",
+        adult: true,
+        glasses: false,
+        beard: true,
+        eating: true,
+        smiles: true,
+        psg: false,
+        girl: false
+      },
+      {
+        name: "Alessia",
+        image: "Alessia.jpeg",
+        adult: true,
+        glasses: false,
+        beard: false,
+        eating: false,
+        smiles: false,
+        psg: false,
+        girl: true
+      },
+      {
+        name: "Anatole",
+        image: "Anatole.jpeg",
+        adult: false,
+        glasses: false,
+        beard: false,
+        eating: false,
+        smiles: true,
+        psg: false,
+        girl: false
+      },
+      {
+        name: "Léon",
+        image: "Leon.jpeg",
+        adult: false,
+        glasses: true,
+        beard: false,
+        eating: false,
+        smiles: false,
+        psg: false,
+        girl: false
+      },
+      {
+        name: "Maïssa",
+        image: "Maissa.jpeg",
+        adult: false,
+        glasses: false,
+        beard: true,
+        eating: false,
+        smiles: true,
+        psg: false,
+        girl: true
+      },
+      {
+        name: "Mamouchka",
+        image: "Mamouchka2.jpeg",
+        adult: true,
+        glasses: true,
+        beard: false,
+        eating: false,
+        smiles: true,
+        psg: false,
+        girl: true
+      },
+      {
+        name: "Masha",
+        image: "Masha.JPG",
+        adult: true,
+        glasses: false,
+        beard: false,
+        eating: false,
+        smiles: true,
+        psg: false,
+        girl: true
+      },
+      {
+        name: "Mia",
+        image: "MIA.jpeg",
+        adult: false,
+        glasses: true,
+        beard: false,
+        eating: true,
+        smiles: false,
+        psg: false,
+        girl: true
+      },
+      {
+        name: "Milo",
+        image: "Milo 1.jpeg",
+        adult: true,
+        glasses: true,
+        beard: true,
+        eating: false,
+        smiles: false,
+        psg: false,
+        girl: false
+      },
+      {
+        name: "Rémi",
+        image: "Rémi.jpeg",
+        adult: true,
+        glasses: false,
+        beard: true,
+        eating: false,
+        smiles: false,
+        psg: true,
+        girl: false
+      },
+      {
+        name: "Sona",
+        image: "SONA.jpeg",
+        adult: false,
+        glasses: true,
+        beard: false,
+        eating: true,
+        smiles: false,
+        psg: false,
+        girl: true
+      },
+      {
+        name: "Papy Alain",
+        image: "PapyAlain.jpeg",
+        adult: true,
+        glasses: true,
+        beard: true,
+        eating: false,
+        smiles: true,
+        psg: false,
+        girl: false
+      }
+    ];
+
+    // === Questions possibles ===
+    const questions = [
+      {
+        id: "adult",
+        label: "Est-ce que c'est un adulte ?",
+        property: "adult"
+      },
+      {
+        id: "girl",
+        label: "Est-ce que c'est une fille ?",
+        property: "girl"
+      },
+      {
+        id: "glasses",
+        label: "Est-ce que la personne porte des lunettes ?",
+        property: "glasses"
+      },
+      {
+        id: "beard",
+        label: "Est-ce que la personne a une barbe (vraie ou en mousse) ?",
+        property: "beard"
+      },
+      {
+        id: "eating",
+        label: "Est-ce que la personne est en train de manger ?",
+        property: "eating"
+      },
+      {
+        id: "smiles",
+        label: "Est-ce que la personne sourit ?",
+        property: "smiles"
+      },
+      {
+        id: "psg",
+        label: "Est-ce que la personne est supportrice du PSG ?",
+        property: "psg"
+      }
+    ];
+
+    // === Liste de cadeaux (commune aux 5 personnages) ===
+    const commonGiftHtml = `
+      <div class="gift-list">
+        <h3>Liste d'idées cadeaux spéciale Cieux Réunis 🎁</h3>
+
+        <h4>Pour Léon 🧒</h4>
+        <ul>
+          <li>Tracteur à moteur (un gros ou on peut monter dessus)</li>
+          <li>Lego dinosaure 76964 ou 76969</li>
+          <li>Lego Superman 76302</li>
+          <li>Imprimante 3D</li>
+          <li>Plastifieuse</li>
+          <li>Biglietti per Ghali</li>
+          <li>Déguisement Tortue Ninja Donatello</li>
+          <li>Livre que je peux lire tout seul</li>
+        </ul>
+
+        <h4>Pour Mia 👧</h4>
+        <ul>
+          <li>Livres qui se colorient avec l'eau</li>
+          <li>Biglietti per concerto "Il coccodrillo come fa"</li>
+          <li>Barrettes pour les cheveux</li>
+          <li>Balle rebondissante</li>
+          <li>Telefono vero</li>
+          <li>Déguisement Tortue Ninja Leonardo</li>
+        </ul>
+
+        <h4>Pour Alessia 💃</h4>
+        <ul>
+          <li>Billet Cesare Cremonini</li>
+          <li>Billet Tiziano Ferro</li>
+          <li>Trattamento corpo</li>
+          <li>Trattamento viso</li>
+          <li>Completo palestra (leggings, maglietta, reggiseno)</li>
+          <li>Boucles d’oreille</li>
+          <li>Carnet</li>
+        </ul>
+
+        <h4>Pour Rémi 😎</h4>
+        <ul>
+          <li>Taille-haie</li>
+          <li>Caleçon de nuit</li>
+          <li>Polo Lacoste blanc</li>
+          <li>Whisky</li>
+          <li>Journée aux thermes</li>
+          <li>Nouvelles sneakers stylées</li>
+          <li>Mangeoire avec photo</li>
+          <li>Appareil photo</li>
+          <li>Sacoche PC similaire à celle que j’ai</li>
+          <li>Vinyle</li>
+          <li>BD</li>
+          <li>Bonbons</li>
+          <li>Ferrari F288 GTO</li>
+          <li>Livres</li>
+          <li>Cave à vin</li>
+          <li>Jean</li>
+          <li>T-shirt style M</li>
+          <li>Sauna de jardin</li>
+          <li>Bain moussant et bombes pour le bain</li>
+          <li>Appareil photo compact avec zoom optique intégré d’au moins ×30 (ex. LUMIX DC-TZ90 ou Sony RX100)</li>
+          <li>Parfum Dior Sauvage (pas eau de toilette ou eau de parfum)</li>
+        </ul>
+
+        <h4>Pour Milo 🐶👑</h4>
+        <ul>
+          <li>Scratch "Milo the King" pour son harnais</li>
+          <li>Niche</li>
+          <li>Oreilles de cochons</li>
+          <li>Pieds de poulet</li>
+        </ul>
+
+        <h4>Pour toute la famille 👨‍👩‍👧‍👦</h4>
+        <ul>
+          <li>Billet concert Annalisa</li>
+          <li>Billet spectacle de magie</li>
+          <li>Machine pour croque-monsieur</li>
+          <li>Blender grand bol en verre</li>
+        </ul>
+      </div>
+    `;
+
+    const giftEligibleNames = new Set(["Léon", "Mia", "Alessia", "Rémi", "Milo"]);
+
+    // === Éléments DOM ===
+    const startScreen = document.getElementById("start-screen");
+    const gameSection = document.getElementById("game");
+    const gridEl = document.getElementById("grid");
+    const remainingCountEl = document.getElementById("remaining-count");
+    const totalCountEl = document.getElementById("total-count");
+    const questionsButtonsContainer = document.getElementById("questions-buttons");
+    const historyList = document.getElementById("history-list");
+    const guessBtn = document.getElementById("guess-btn");
+    const restartBtn = document.getElementById("restart-btn");
+    const modeIndicator = document.getElementById("mode-indicator");
+
+    const btnRandom = document.getElementById("btn-random");
+    const btnManual = document.getElementById("btn-manual");
+    const manualSelectWrapper = document.getElementById("manual-select");
+    const manualPersonSelect = document.getElementById("manual-person");
+    const btnStartManual = document.getElementById("btn-start-manual");
+
+    const modalBackdrop = document.getElementById("modal-backdrop");
+    const modalTitle = document.getElementById("modal-title");
+    const modalImg = document.getElementById("modal-img");
+    const modalText = document.getElementById("modal-text");
+    const modalClose = document.getElementById("modal-close");
+    const giftContainer = document.getElementById("gift-container");
+
+    // === État du jeu ===
+    let secretPerson = null;
+    let eliminated = new Set();
+    let started = false;
+    let guessMode = false;
+
+    // Construire les boutons de questions
+    function buildQuestionButtons() {
+      questionsButtonsContainer.innerHTML = "";
+      questions.forEach((q) => {
+        const btn = document.createElement("button");
+        btn.textContent = q.label;
+        btn.addEventListener("click", () => {
+          if (!started || !secretPerson) return;
+          const value = !!secretPerson[q.property];
+          const answerText = value ? "OUI ✅" : "NON ❌";
+
+          const li = document.createElement("li");
+          li.innerHTML = `<strong>${q.label}</strong> → <span class="${
+            value ? "badge" : ""
+          }">${answerText}</span>`;
+          historyList.appendChild(li);
+          historyList.scrollTop = historyList.scrollHeight;
+        });
+        questionsButtonsContainer.appendChild(btn);
+      });
+    }
+
+    // Construire la liste pour la sélection manuelle
+    persons.forEach((p, index) => {
+      const opt = document.createElement("option");
+      opt.value = index;
+      opt.textContent = p.name;
+      manualPersonSelect.appendChild(opt);
+    });
+
+    // Construire le plateau
+    function buildGrid() {
+      gridEl.innerHTML = "";
+      persons.forEach((p) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.dataset.name = p.name;
+
+        const img = document.createElement("img");
+        img.src = p.image;
+        img.alt = p.name;
+
+        const label = document.createElement("div");
+        label.className = "card-name";
+        label.textContent = p.name;
+
+        card.appendChild(img);
+        card.appendChild(label);
+
+        card.addEventListener("click", () => {
+          if (!started) return;
+
+          if (guessMode) {
+            // Ce clic est une proposition de réponse
+            handleGuess(p);
+          } else {
+            // Mode normal : toggle élimination
+            if (eliminated.has(p.name)) {
+              eliminated.delete(p.name);
+              card.classList.remove("eliminated");
+            } else {
+              eliminated.add(p.name);
+              card.classList.add("eliminated");
+            }
+            updateRemainingCount();
+          }
+        });
+
+        gridEl.appendChild(card);
+      });
+
+      totalCountEl.textContent = persons.length;
+      updateRemainingCount();
+    }
+
+    function updateRemainingCount() {
+      const remaining = persons.length - eliminated.size;
+      remainingCountEl.textContent = remaining;
+    }
+
+    function setSecretRandom() {
+      const idx = Math.floor(Math.random() * persons.length);
+      secretPerson = persons[idx];
+    }
+
+    function setSecretFromManual() {
+      const idx = parseInt(manualPersonSelect.value, 10);
+      if (!Number.isNaN(idx)) {
+        secretPerson = persons[idx];
+      }
+    }
+
+    function startGame() {
+      started = true;
+      guessMode = false;
+      updateModeIndicator();
+      eliminated = new Set();
+      buildGrid();
+      buildQuestionButtons();
+      historyList.innerHTML = "";
+      updateRemainingCount();
+      startScreen.style.display = "none";
+      gameSection.style.display = "grid";
+    }
+
+    function updateModeIndicator() {
+      if (guessMode) {
+        modeIndicator.textContent =
+          "Mode DEVINETTE : clique maintenant sur la carte que tu veux proposer.";
+      } else {
+        modeIndicator.textContent =
+          "Mode normal : les cartes barrent / débarrent les personnages.";
+      }
+    }
+
+    // === Gestion des devinettes ===
+    guessBtn.addEventListener("click", () => {
+      if (!started || !secretPerson) return;
+      guessMode = true;
+      updateModeIndicator();
+    });
+
+    function handleGuess(personGuessed) {
+      guessMode = false;
+      updateModeIndicator();
+
+      const isCorrect = personGuessed.name === secretPerson.name;
+      openModalForResult(isCorrect, personGuessed);
+    }
+
+    function openModalForResult(isCorrect, guessedPerson) {
+      modalBackdrop.style.display = "flex";
+
+      if (isCorrect) {
+        modalTitle.textContent = "Bravo, tu as gagné ! 🎉";
+        modalText.innerHTML =
+          `Tu as trouvé : <strong>${secretPerson.name}</strong> !` +
+          `<br><span class="tiny">Tu peux recommencer une partie si tu veux continuer.</span>`;
+      } else {
+        modalTitle.textContent = "Raté cette fois… 😅";
+        modalText.innerHTML =
+          `Tu as cliqué sur <strong>${guessedPerson.name}</strong>, ` +
+          `mais le personnage secret était <strong>${secretPerson.name}</strong>.`;
+      }
+
+      // image du personnage secret
+      modalImg.innerHTML = "";
+      if (secretPerson) {
+        const img = document.createElement("img");
+        img.src = secretPerson.image;
+        img.alt = secretPerson.name;
+        modalImg.appendChild(img);
+      }
+
+      // cadeaux ?
+      if (isCorrect && giftEligibleNames.has(secretPerson.name)) {
+        giftContainer.innerHTML = commonGiftHtml;
+        giftContainer.style.display = "block";
+      } else {
+        giftContainer.innerHTML = "";
+        giftContainer.style.display = "none";
+      }
+    }
+
+    modalClose.addEventListener("click", () => {
+      modalBackdrop.style.display = "none";
+    });
+
+    modalBackdrop.addEventListener("click", (e) => {
+      if (e.target === modalBackdrop) {
+        modalBackdrop.style.display = "none";
+      }
+    });
+
+    restartBtn.addEventListener("click", () => {
+      // Retour à l'écran de démarrage
+      started = false;
+      secretPerson = null;
+      guessMode = false;
+      startScreen.style.display = "block";
+      gameSection.style.display = "none";
+      manualSelectWrapper.style.display = "none";
+    });
+
+    // === Démarrage : choix du mode ===
+    btnRandom.addEventListener("click", () => {
+      setSecretRandom();
+      startGame();
+    });
+
+    btnManual.addEventListener("click", () => {
+      manualSelectWrapper.style.display = "flex";
+    });
+
+    btnStartManual.addEventListener("click", () => {
+      setSecretFromManual();
+      if (!secretPerson) return;
+      startGame();
+    });
+
+    // Initialisation
+    buildGrid();
+    buildQuestionButtons();
+  </script>
+</body>
+</html>
